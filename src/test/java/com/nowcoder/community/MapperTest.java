@@ -1,8 +1,10 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.dao.DiscussPostMapper;
+import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeansException;
@@ -33,6 +35,9 @@ public class MapperTest implements ApplicationContextAware {
     @Autowired
     private DiscussPostMapper discussPostMapper;
 
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
+
 
     @Test
     public void testSelectUser() {
@@ -47,7 +52,7 @@ public class MapperTest implements ApplicationContextAware {
     }
 
     @Test
-    public void testInsertUser(){
+    public void testInsertUser() {
         User user = new User();
         user.setUsername("test");
         user.setPassword("123456");
@@ -62,7 +67,7 @@ public class MapperTest implements ApplicationContextAware {
     }
 
     @Test
-    public void testUpdateUser(){
+    public void testUpdateUser() {
         int rows = userMapper.updateStatus(150, 1);
         System.out.println(rows);
         rows = userMapper.updateHeader(150, "http://www.nowcoder.com/102.png");
@@ -73,13 +78,37 @@ public class MapperTest implements ApplicationContextAware {
     }
 
     @Test
-    public void testSelectPost(){
+    public void testSelectPost() {
         List<DiscussPost> list = discussPostMapper.selectDiscussPost(149, 0, 10);
-        for (DiscussPost discussPost:list){
+        for (DiscussPost discussPost : list) {
             System.out.println(discussPost);
         }
         int rows = discussPostMapper.selectDiscussPostRows(149);
         System.out.println(rows);
+    }
+
+    @Test
+    public void testLoginTicket() {
+        // 测试插入
+//        LoginTicket loginTicket = new LoginTicket();
+//
+//        loginTicket.setUserId(101);
+//        loginTicket.setTicket("abcd");
+//        loginTicket.setStatus(0);
+//        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000 * 60 * 10));
+//
+//        loginTicketMapper.insertLoginTicket(loginTicket);
+
+//        测试查询
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket("abcd");
+        System.out.println(loginTicket);
+
+        // 测试修改
+        loginTicketMapper.updateStatus("abcd", 1);
+        loginTicket = loginTicketMapper.selectByTicket("abcd");
+        System.out.println(loginTicket);
+
+
     }
 
 }
