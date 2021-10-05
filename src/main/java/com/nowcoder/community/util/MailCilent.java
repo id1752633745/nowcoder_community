@@ -35,7 +35,6 @@ public class MailCilent {
         } catch (MessagingException e) {
             logger.error("发送邮件失败：" + e.getMessage());
         }
-
     }
 
 }
