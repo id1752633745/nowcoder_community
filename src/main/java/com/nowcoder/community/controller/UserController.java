@@ -19,10 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -107,7 +109,19 @@ public class UserController {
         } catch (IOException e) {
             logger.error("读取图像失败：" + e.getMessage());
         }
-
     }
 
+    // 修改密码
+    @RequestMapping(path = "/setting/modifyPass", method = RequestMethod.POST)
+    public String modifyPassword(Model model, String oldPassword, String newPassword, HttpSession session) {
+        User user = hostHolder.getUser();
+        Map<String, Object> map = userService.modifyPassword(oldPassword, newPassword, user);
+        if (map.isEmpty()) {
+            return "/site/setting";
+        } else {
+            model.addAttribute("oldPasswordMsg", map.get("oldPasswordMsg"));
+            model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
+            return "/site/setting";
+        }
+    }
 }
