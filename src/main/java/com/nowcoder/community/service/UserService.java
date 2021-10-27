@@ -280,10 +280,13 @@ public class UserService implements CommunityConstant {
         redisTemplate.delete(redisKey);
     }
 
+    // 获得用户权限
     public Collection<? extends GrantedAuthority> getAuthorities(int userId) {
         User user = this.findUserById(userId);
+
         List<GrantedAuthority> list = new ArrayList<>();
         list.add(new GrantedAuthority() {
+
             @Override
             public String getAuthority() {
                 switch (user.getType()) {

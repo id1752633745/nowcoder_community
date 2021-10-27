@@ -32,8 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                 .antMatchers(
                         "/user/setting",
                         "/user/upload",
-                        "/user/setting/modifyPass",
-                        "/user/header/**",
                         "/discuss/add",
                         "/comment/add/**",
                         "/letter/**",
@@ -56,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                 )
                 .antMatchers(
                         "/discuss/delete",
-                        "/data/**"
+                        "/data/**",
+                        "actuator/**"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_ADMIN
